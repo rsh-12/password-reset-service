@@ -1,28 +1,28 @@
-module.exports = function () {
+const keys = require('../keys/index');
 
-    console.log("ok")
+module.exports = function () {
     let amqp = require('amqplib/callback_api');
 
+    amqp.connect(keys.RABBIT_HOST, function (connectionError, connection) {
+        if (connectionError) throw connectionError;
 
-    amqp.connect('amqp://localhost', function (error0, connection) {
-        if (error0) throw error0;
 
-        connection.createChannel(function (error1, channel) {
-            if (error1) throw error1;
+        connection.createChannel(function (channelError, channel) {
+            if (channelError) throw channelError;
 
-            let queue = 'tut.rpc.requests';
+            let queue = keys.QUEUE;
 
             // channel.assertQueue(queue, {durable: false});
             channel.prefetch(1);
-            console.log(' [x] Awaiting RPC requests');
+            console.log('>>> awaiting RPC requests...');
             channel.consume(queue, function reply(msg) {
 
-                console.log(JSON.parse(msg.content.toString()))
+                console.log(JSON.parse(msg.content.toString())) // output the request
 
-                let r = '12' // test response
+                let response = 12 // test response
 
                 channel.sendToQueue(msg.properties.replyTo,
-                    Buffer.from(r.toString()), {correlationId: msg.properties.correlationId});
+                    Buffer.from(response.toString()), {correlationId: msg.properties.correlationId});
 
                 channel.ack(msg);
             });
