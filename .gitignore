@@ -138,3 +138,5 @@ package-lock.json
 
 # Benchmarking
 benchmarks/graphs
+
+dbdata/
