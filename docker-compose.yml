@@ -1,14 +1,23 @@
 version: '3.8'
 services:
+  # database
   mongo:
     image: mongo
     container_name: mongodb
     ports:
-    - 27017:27017
+      - 27017:27017
 
     volumes:
-    - ./dbdata:/data/db
+      - ./dbdata:/data/db
 
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
+
+  # message broker
+  rabbitmq:
+    image: library/rabbitmq:3-management
+    container_name: c-rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
