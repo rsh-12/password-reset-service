@@ -18,6 +18,8 @@ module.exports = function () {
             console.log('>>> awaiting RPC requests...');
             channel.consume(queue, function reply(msg) {
                 console.log(JSON.parse(msg.content.toString())) // output the request
+                // request = { type=(email|token), value=value }
+                // type == email ? createTokenSendEmail : validateToken
 
                 let response = 12 // test response
                 channel.sendToQueue(msg.properties.replyTo,
