@@ -19,7 +19,7 @@ module.exports = function () {
 
                 console.log(JSON.parse(msg.content.toString()))
 
-                let r = '12'
+                let r = '12' // test response
 
                 channel.sendToQueue(msg.properties.replyTo,
                     Buffer.from(r.toString()), {correlationId: msg.properties.correlationId});
