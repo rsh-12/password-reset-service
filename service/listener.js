@@ -1,27 +1,19 @@
 const keys = require('../keys/index');
+let amqp = require('amqplib/callback_api');
 
-module.exports = function () {
-    let amqp = require('amqplib/callback_api');
-
+function listenerServer(queue, response) {
     amqp.connect(keys.RABBIT_HOST, function (connectionError, connection) {
         if (connectionError) throw connectionError;
 
-
         connection.createChannel(function (channelError, channel) {
-            if (channelError) {
-                throw channelError;
-            }
-            let queue = keys.QUEUE;
+            if (channelError) throw channelError;
 
             // channel.assertQueue(queue, {durable: false});
             channel.prefetch(1);
             console.log('>>> awaiting RPC requests...');
             channel.consume(queue, function reply(msg) {
                 console.log(JSON.parse(msg.content.toString())) // output the request
-                // request = { type=(email|token), value=value }
-                // type == email ? createTokenSendEmail : validateToken
 
-                let response = 12 // test response
                 channel.sendToQueue(msg.properties.replyTo,
                     Buffer.from(response.toString()), {correlationId: msg.properties.correlationId});
 
@@ -29,4 +21,9 @@ module.exports = function () {
             });
         });
     });
+}
+
+module.exports = function () {
+    listenerServer(keys.EMAIL_QUEUE, 12);
+    listenerServer(keys.TOKEN_QUEUE, 123);
 };
