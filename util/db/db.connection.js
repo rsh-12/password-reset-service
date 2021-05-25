@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const keys = require('../keys/index')
+const keys = require('../../keys')
 
 module.exports = async function connection() {
     try {
