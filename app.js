@@ -4,7 +4,7 @@ const logger = require('morgan');
 const listener = require('./service/listener')
 const indexRouter = require('./routes/index');
 const app = express();
-const start_connection = require('./util/db.connection');
+const start_connection = require('./util/db/db.connection');
 
 // const cookieParser = require('cookie-parser');
 // app.use(cookieParser());
