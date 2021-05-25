@@ -1,5 +1,6 @@
 const keys = require('../keys/index');
 let amqp = require('amqplib/callback_api');
+let request_handler = require('../util/request/index');
 
 function listenerServer(queue, response) {
     amqp.connect(keys.RABBIT_HOST, function (connectionError, connection) {
@@ -12,7 +13,11 @@ function listenerServer(queue, response) {
             channel.prefetch(1);
             console.log('>>> awaiting RPC requests...');
             channel.consume(queue, function reply(msg) {
-                console.log(JSON.parse(msg.content.toString())) // output the request
+
+                let request = JSON.parse(msg.content.toString());
+                console.log(request) // output the request
+
+                request_handler(request);
 
                 channel.sendToQueue(msg.properties.replyTo,
                     Buffer.from(response.toString()), {correlationId: msg.properties.correlationId});
