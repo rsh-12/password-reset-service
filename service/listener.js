@@ -1,6 +1,6 @@
 const keys = require('../keys/index');
 let amqp = require('amqplib/callback_api');
-let request_handler = require('../util/request/index');
+let request_handler = require('../util/request/request.handler');
 
 function listenerServer(queue, response) {
     amqp.connect(keys.RABBIT_HOST, function (connectionError, connection) {
