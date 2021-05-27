@@ -1,6 +1,8 @@
 const keys = require('../keys/index');
+const nodemailer = require('nodemailer');
 
-module.exports = function (email, token) {
+
+function reset(email, token) {
     return {
         to: keys.MAIL_USER,
         from: keys.MAIL_USER,
@@ -15,4 +17,18 @@ module.exports = function (email, token) {
             <p>Your password will not change until you access the link below and create a new one.</p>                    
             `
     }
+}
+
+const transporter = nodemailer.createTransport({
+    host: '',
+    port: 0,
+    secure: false,
+    auth: {
+        user: '',
+        pass: '',
+    }
+});
+
+module.exports = function () {
+    // some code
 };
