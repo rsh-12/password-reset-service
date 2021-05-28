@@ -20,12 +20,12 @@ function reset(email, token) {
 }
 
 const transporter = nodemailer.createTransport({
-    host: '',
-    port: 0,
+    host: keys.MAIL_HOST,
+    port: 587,
     secure: false,
     auth: {
-        user: '',
-        pass: '',
+        user: keys.MAIL_USER,
+        pass: keys.MAIL_PWD,
     }
 });
 
