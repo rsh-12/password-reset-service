@@ -10,5 +10,7 @@ module.exports = {
     MONGODB_USERNAME: process.env.MONGODB_USERNAME,
     MONGODB_PASSWORD: process.env.MONGODB_PASSWORD,
     // email
+    MAIL_HOST: process.env.MAIL_HOST,
     MAIL_USER: process.env.MAIL_USER,
+    MAIL_PWD: process.env.MAIL_PWD,
 }
