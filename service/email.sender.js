@@ -1,5 +1,8 @@
 const keys = require('../keys/index');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+const Token = require('../models/token');
+const crypto = require('crypto');
 
 
 function reset(email, token) {
@@ -29,6 +32,22 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-module.exports = function () {
-    // some code
-};
+async function renewToken(username) {
+    const query = Token.findOne({email: username});
+    const update = {
+        email: username,
+        token: await bcrypt.hash(crypto.randomBytes(5).toString('hex'), 10),
+        expires_at: Date.now() + 10 * 60 * 1000,
+        updated_at: Date.now()
+    };
+    const options = {upsert: true, new: true, setDefaultsOnInsert: true};
+
+    Token.findOneAndUpdate(query, update, options, function (error, result) {
+        if (error) return error;
+        console.log(result)
+    });
+}
+
+module.exports = async function (username) {
+    await renewToken(username);
+}
