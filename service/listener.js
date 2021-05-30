@@ -20,12 +20,12 @@ function listenerServer(queue, errorMessage) {
                 request_handler(request)
                     .then(value => {
                         channel.sendToQueue(msg.properties.replyTo,
-                            Buffer.from('OK'), {correlationId: msg.properties.correlationId});
+                            Buffer.from(JSON.stringify('ok')), {correlationId: msg.properties.correlationId});
                     })
                     .catch(reason => {
                         console.error(reason);
                         channel.sendToQueue(msg.properties.replyTo,
-                            Buffer.from(errorMessage),
+                            Buffer.from(JSON.stringify(errorMessage)),
                             {correlationId: msg.properties.correlationId});
                     });
 
