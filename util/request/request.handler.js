@@ -1,7 +1,10 @@
-module.exports = function (value) {
-    if (Object.keys(value).toString() === 'email') {
-        // some code
-    } else if (Object.keys(value).toString() === 'token') {
+const sendToken = require('../../service/email.sender');
+
+module.exports = async function (value) {
+    const key = Object.keys(value).toString();
+    if (key === 'email') {
+         await sendToken(Object.values(value));
+    } else if (key === 'token') {
         // some code
     } else {
         console.error('Something went wrong')
