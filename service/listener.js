@@ -2,7 +2,7 @@ const keys = require('../keys/index');
 let amqp = require('amqplib/callback_api');
 let request_handler = require('../util/request/request.handler');
 
-function listenerServer(queue, response) {
+function listenerServer(queue, errorMessage) {
     amqp.connect(keys.RABBIT_HOST, function (connectionError, connection) {
         if (connectionError) throw connectionError;
 
@@ -17,10 +17,17 @@ function listenerServer(queue, response) {
                 let request = JSON.parse(msg.content.toString());
                 console.log(request) // output the request
 
-                request_handler(request);
-
-                channel.sendToQueue(msg.properties.replyTo,
-                    Buffer.from(response.toString()), {correlationId: msg.properties.correlationId});
+                request_handler(request)
+                    .then(value => {
+                        channel.sendToQueue(msg.properties.replyTo,
+                            Buffer.from('OK'), {correlationId: msg.properties.correlationId});
+                    })
+                    .catch(reason => {
+                        console.error(reason);
+                        channel.sendToQueue(msg.properties.replyTo,
+                            Buffer.from(errorMessage),
+                            {correlationId: msg.properties.correlationId});
+                    });
 
                 channel.ack(msg);
             });
@@ -29,6 +36,6 @@ function listenerServer(queue, response) {
 }
 
 module.exports = function () {
-    listenerServer(keys.EMAIL_QUEUE, 12);
-    listenerServer(keys.TOKEN_QUEUE, 123);
+    listenerServer(keys.EMAIL_QUEUE, 'email error');
+    listenerServer(keys.TOKEN_QUEUE, 'token error');
 };
