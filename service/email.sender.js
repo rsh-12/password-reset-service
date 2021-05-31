@@ -6,7 +6,7 @@ const transporter = require('../util/email/transporter');
 
 async function renewAndSendToken(username) {
     const query = Token.findOne({email: username});
-    let token = await bcrypt.hash(crypto.randomBytes(5).toString('hex'), 10);
+    let token = await bcrypt.hash((username + crypto.randomBytes(5).toString('hex')), 10);
     const update = {
         email: username,
         token: token,
