@@ -10,7 +10,7 @@ async function renewAndSendToken(username) {
     const update = {
         email: username,
         token: token,
-        expires_at: Date.now() + 10 * 60 * 1000,
+        expires_at: Date.now() + 30 * 60 * 1000, // 30 minutes
         updated_at: Date.now()
     };
     const options = {upsert: true, new: true, setDefaultsOnInsert: true};
