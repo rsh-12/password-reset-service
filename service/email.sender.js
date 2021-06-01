@@ -5,6 +5,8 @@ const reset = require('../util/email/template');
 const transporter = require('../util/email/transporter');
 
 async function renewAndSendToken(username) {
+    let success = false;
+
     const query = Token.findOne({email: username});
     let token = await bcrypt.hash((username + crypto.randomBytes(5).toString('hex')), 10);
     const update = {
@@ -15,13 +17,18 @@ async function renewAndSendToken(username) {
     };
     const options = {upsert: true, new: true, setDefaultsOnInsert: true};
 
-    Token.findOneAndUpdate(query, update, options, function (error, result) {
-        if (error) return error;
-        console.log(result)
-        transporter.sendMail(reset(username, token))
+    await Token.findOneAndUpdate(query, update, options, function (error, result) {
+        if (error) {
+            console.error(error)
+        }
+        console.log(result.token)
+        // transporter.sendMail(reset(username, token))
+        success = true;
     });
+
+    return success;
 }
 
-module.exports = async function (username) {
-    await renewAndSendToken(username);
+module.exports = function (username) {
+    return renewAndSendToken(username);
 }
