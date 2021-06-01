@@ -1,11 +1,15 @@
 const sendMail = require('../service/email.sender');
+const getMail = require('../service/token.finder');
 
-module.exports = async function (value) {
-    const key = Object.keys(value).toString();
+module.exports = function (request) {
+
+    const key = Object.keys(request).toString();
+    const value = Object.values(request).toString();
+
     if (key === 'email') {
-         await sendMail(Object.values(value).toString());
+        return sendMail(value);
     } else if (key === 'token') {
-        // some code
+        return getMail(value);
     } else {
         console.error('Something went wrong')
     }
