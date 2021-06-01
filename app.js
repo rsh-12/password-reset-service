@@ -6,8 +6,6 @@ const indexRouter = require('./routes/index');
 const app = express();
 const start_connection = require('./util/db/db.connection');
 
-// const cookieParser = require('cookie-parser');
-// app.use(cookieParser());
 
 app.use(logger('dev'));
 app.use(express.json());
