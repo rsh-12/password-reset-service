@@ -1,4 +1,4 @@
-const sendMail = require('../../service/email.sender');
+const sendMail = require('../service/email.sender');
 
 module.exports = async function (value) {
     const key = Object.keys(value).toString();
