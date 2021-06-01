@@ -18,13 +18,14 @@ function listenerServer(queue) {
 
                 request_handler(request)
                     .then(value => {
+                        console.log('>>> value = ' + value)
                         channel.sendToQueue(msg.properties.replyTo,
-                            Buffer.from(JSON.stringify(true)), {correlationId: msg.properties.correlationId});
+                            Buffer.from(JSON.stringify(value)), {correlationId: msg.properties.correlationId});
                     })
                     .catch(reason => {
                         console.error(reason);
                         channel.sendToQueue(msg.properties.replyTo,
-                            Buffer.from(JSON.stringify(false)),
+                            Buffer.from(JSON.stringify('')),
                             {correlationId: msg.properties.correlationId});
                     });
 
