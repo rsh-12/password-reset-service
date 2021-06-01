@@ -22,7 +22,7 @@ async function renewAndSendToken(username) {
             console.error(error)
         }
         console.log(result.token)
-        // transporter.sendMail(reset(username, token))
+        transporter.sendMail(reset(username, token))
         success = true;
     });
 
