@@ -1,9 +1,9 @@
-const sendToken = require('../../service/email.sender');
+const sendMail = require('../../service/email.sender');
 
 module.exports = async function (value) {
     const key = Object.keys(value).toString();
     if (key === 'email') {
-         await sendToken(Object.values(value));
+         await sendMail(Object.values(value).toString());
     } else if (key === 'token') {
         // some code
     } else {
