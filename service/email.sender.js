@@ -17,6 +17,7 @@ async function renewAndSendToken(username) {
 
     Token.findOneAndUpdate(query, update, options, function (error, result) {
         if (error) return error;
+        console.log(result)
         transporter.sendMail(reset(username, token))
     });
 }
