@@ -10,7 +10,7 @@ const tokenSchema = new Schema({
         required: true
     },
     expires_at: {
-        type: Date, default: () => Date.now() + 10 * 60 * 1000
+        type: Date, default: () => Date.now() + 30 * 60 * 1000
     },
     created_at: {
         type: Date, default: Date.now
