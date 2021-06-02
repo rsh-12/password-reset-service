@@ -2,7 +2,6 @@ const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const listener = require('./service/listener')
-const indexRouter = require('./routes/index');
 const app = express();
 const start_connection = require('./util/db/db.connection');
 
@@ -10,8 +9,6 @@ const start_connection = require('./util/db/db.connection');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-
-app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
