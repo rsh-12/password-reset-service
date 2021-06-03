@@ -14,4 +14,6 @@ module.exports = {
     MAIL_HOST: process.env.MAIL_HOST,
     MAIL_USER: process.env.MAIL_USER,
     MAIL_PWD: process.env.MAIL_PWD,
+
+    GITHUB: process.env.GITHUB,
 }
