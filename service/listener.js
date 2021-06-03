@@ -10,7 +10,6 @@ function listenerServer(queue) {
             if (channelError) throw channelError;
 
             channel.prefetch(1);
-            console.log('>>> awaiting RPC requests...');
             channel.consume(queue, function reply(msg) {
 
                 let request = JSON.parse(msg.content.toString());
@@ -38,4 +37,5 @@ function listenerServer(queue) {
 module.exports = function () {
     listenerServer(keys.EMAIL_QUEUE);
     listenerServer(keys.TOKEN_QUEUE);
+    console.log('>>> awaiting RPC requests...');
 };
