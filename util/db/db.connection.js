@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const keys = require('../../keys')
 
-module.exports = async function connection() {
+module.exports = async function connection(uri = keys.MONGODB_URI) {
     try {
         await mongoose.connect(
-            keys.MONGODB_URI, {
+            uri, {
                 auth: {
                     user: keys.MONGODB_USERNAME,
                     password: keys.MONGODB_PASSWORD
