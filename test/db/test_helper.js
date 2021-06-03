@@ -9,7 +9,7 @@ before(() => {
 })
 
 beforeEach((done) => {
-    mongoose.connection.collections.users.drop(() => done())
+    mongoose.connection.collections.tokens.drop(() => done())
 });
 
 
