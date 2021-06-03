@@ -7,6 +7,7 @@ module.exports = {
     TOKEN_QUEUE: process.env.TOKEN_QUEUE,
     // database
     MONGODB_URI: process.env.MONGODB_URI,
+    MONGODB_TEST_URI: process.env.MONGODB_TEST_URI,
     MONGODB_USERNAME: process.env.MONGODB_USERNAME,
     MONGODB_PASSWORD: process.env.MONGODB_PASSWORD,
     // email
