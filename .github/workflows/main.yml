@@ -24,10 +24,6 @@ jobs:
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.6.0
-#        env:
-#          MONGO_INITDB_ROOT_USERNAME: admin
-#          MONGO_INITDB_ROOT_PASSWORD: admin
-
         with:
           mongodb-version: 4.4
 
@@ -36,8 +32,6 @@ jobs:
 
         env:
           NODE_ENV: production
-
-          MONGODB_USERNAME: admin
-          MONGODB_PASSWORD: admin
+          GITHUB: true
           MONGODB_TEST_URI: mongodb://localhost:27017
 
