@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 const keys = require('../../keys/index');
-const connection = require('../../util/db/db.connection');
 
 before(() => {
-    connection(keys.MONGODB_TEST_URI).catch(reason => {
-        console.error(reason);
-    });
+    mongoose.connect(keys.MONGODB_TEST_URI, {
+        auth: {
+            user: keys.MONGODB_USERNAME,
+            password: keys.MONGODB_PASSWORD
+        },
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true
+    }).catch(err => console.error(err))
 })
 
 beforeEach((done) => {
