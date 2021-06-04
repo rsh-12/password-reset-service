@@ -15,7 +15,7 @@ if (keys.GITHUB) {
 }
 
 
-beforeEach((done) => {
+afterEach((done) => {
     mongoose.connection.collections.tokens.drop(() => done())
 });
 
